@@ -86,13 +86,11 @@
 
         .autocomplete-active {
             font-family: Arial, sans-serif;
-
             background-color: #d4d4d4 !important;
         }
 
         .lista-escolas {
             font-family: Arial, sans-serif;
-
             max-height: 150px;
             width: 579px;
             overflow-y: auto;
@@ -110,7 +108,6 @@
         .lista-escolas li:hover {
             font-family: Arial, sans-serif;
             background-color: #e9e9e9;
-
         }
     </style>
 </head>
@@ -120,7 +117,7 @@
     <div class="lista-escolas">
         <ul id="listaEscolas"></ul>
     </div>
-
+    
     <h2>Fila de impressão</h2>
     <div class="lista-escolas">
         <ul id="escolasSelecionadas"></ul>
@@ -128,6 +125,8 @@
 
     <button onclick="gerarEtiquetas()">Gerar Etiquetas</button>
     <button onclick="window.print()">Imprimir / Salvar PDF</button>
+
+    <input type="text" id="pesquisaEscola" placeholder="Pesquisar escola">
 
     <div id="etiquetas" class="etiquetas"></div>
 
@@ -156,11 +155,7 @@
         }
 
         function carregarAutocomplete() {
-            const input = document.createElement('input');
-            input.id = 'pesquisaEscola';
-            input.placeholder = 'Pesquisar escola';
-            document.body.insertBefore(input, document.body.firstChild);
-
+            const input = document.getElementById('pesquisaEscola');
             input.addEventListener("input", function() {
                 const val = this.value;
                 closeAllLists();
@@ -241,7 +236,7 @@
 
                     const infoEscola = document.createElement('p');
                     infoEscola.className = 'infoEscola';
-                    infoEscola.textContent = `INEP: ${escolaDados.INEP}, GERÊNCIA: ${escolaDados.GERÊNCIA}, ID: ${escolaDados.ID}`;
+                    infoEscola.textContent = `INEP: ${escolaDados.INEP}, GERÊNCIA: ${escolaDados.GRE}, ID: ${escolaDados.ID}`;
                     infoEscola.style.top = '90px';
                     infoEscola.style.left = '10px';
 
