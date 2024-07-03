@@ -120,21 +120,16 @@
     <div class="lista-escolas">
         <ul id="listaEscolas"></ul>
     </div>
-    
+
     <h2>Fila de impressão</h2>
     <div class="lista-escolas">
         <ul id="escolasSelecionadas"></ul>
-
     </div>
 
     <button onclick="gerarEtiquetas()">Gerar Etiquetas</button>
     <button onclick="window.print()">Imprimir / Salvar PDF</button>
 
-
     <div id="etiquetas" class="etiquetas"></div>
-
-
-    
 
     <script>
         let dados;
@@ -161,7 +156,11 @@
         }
 
         function carregarAutocomplete() {
-            const input = document.getElementById('pesquisaEscola');
+            const input = document.createElement('input');
+            input.id = 'pesquisaEscola';
+            input.placeholder = 'Pesquisar escola';
+            document.body.insertBefore(input, document.body.firstChild);
+
             input.addEventListener("input", function() {
                 const val = this.value;
                 closeAllLists();
@@ -245,7 +244,6 @@
                     infoEscola.textContent = `INEP: ${escolaDados.INEP}, GERÊNCIA: ${escolaDados.GERÊNCIA}, ID: ${escolaDados.ID}`;
                     infoEscola.style.top = '90px';
                     infoEscola.style.left = '10px';
-
 
                     etiquetaDiv.appendChild(nomeEscola);
                     etiquetaDiv.appendChild(infoEscola);
