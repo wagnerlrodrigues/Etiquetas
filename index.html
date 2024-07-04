@@ -155,50 +155,7 @@
             });
         }
 
-        function carregarAutocomplete() {
-            const input = document.createElement('input');
-            input.id = 'pesquisaEscola';
-            input.placeholder = 'Pesquisar escola';
-            document.body.insertBefore(input, document.body.firstChild);
-
-            input.addEventListener("input", function() {
-                const val = this.value;
-                closeAllLists();
-                if (!val) return false;
-
-                const div = document.createElement("DIV");
-                div.setAttribute("id", this.id + "autocomplete-list");
-                div.setAttribute("class", "autocomplete-items");
-                this.parentNode.appendChild(div);
-
-                dados.forEach(escola => {
-                    if (escola.ESCOLA.toLowerCase().includes(val.toLowerCase())) {
-                        const b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + escola.ESCOLA.substr(0, val.length) + "</strong>";
-                        b.innerHTML += escola.ESCOLA.substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='" + escola.ESCOLA + "'>";
-                        b.addEventListener("click", function() {
-                            input.value = this.getElementsByTagName("input")[0].value;
-                            closeAllLists();
-                        });
-                        div.appendChild(b);
-                    }
-                });
-            });
-
-            function closeAllLists(elmnt) {
-                const x = document.getElementsByClassName("autocomplete-items");
-                for (let i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != input) {
-                        x[i].parentNode.removeChild(x[i]);
-                    }
-                }
-            }
-
-            document.addEventListener("click", function (e) {
-                closeAllLists(e.target);
-            });
-        }
+        
 
         function adicionarEscola() {
             const pesquisaEscola = document.getElementById('pesquisaEscola');
