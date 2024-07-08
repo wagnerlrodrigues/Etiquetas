@@ -172,8 +172,9 @@
 
         <button onclick="gerarEtiquetas()">Gerar Etiquetas</button>
         <button onclick="window.print()">Imprimir / Salvar PDF</button>
-    </div>
 
+    </div>
+    <h2>Etiquetas geradas:</h2>
     <div id="etiquetas" class="etiquetas"></div>
 
     <script>
@@ -236,13 +237,13 @@
                     const nomeEscola = document.createElement('h2');
                     nomeEscola.className = 'nomeEscola';
                     nomeEscola.textContent = escolaDados.ESCOLA;
-                    nomeEscola.style.top = '10px';
+                    nomeEscola.style.top = '0px';
                     nomeEscola.style.left = '10px';
 
                     const infoEscola = document.createElement('p');
                     infoEscola.className = 'infoEscola';
-                    infoEscola.textContent = `INEP: ${escolaDados.INEP}, GERÊNCIA: ${escolaDados.GERÊNCIA}, ID: ${escolaDados.ID}`;
-                    infoEscola.style.top = '100px';
+                    infoEscola.innerHTML = `<strong>INEP:</strong> ${escolaDados.INEP} <p><strong>GERÊNCIA:</strong> ${escolaDados.GERÊNCIA} <strong>ID:</strong> ${escolaDados.ID}`;
+                    infoEscola.style.top = '85px';
                     infoEscola.style.left = '10px';
 
                     etiquetaDiv.appendChild(nomeEscola);
