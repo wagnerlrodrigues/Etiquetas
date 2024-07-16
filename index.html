@@ -179,7 +179,7 @@
 
     <script>
         let dados;
-
+    
         fetch('dados.json')
             .then(response => response.json())
             .then(json => {
@@ -189,7 +189,7 @@
                 carregarAutocomplete();
             })
             .catch(error => console.error('Erro ao carregar o arquivo JSON:', error));
-
+    
         function carregarTodasEscolas() {
             const listaEscolas = document.getElementById('listaEscolas');
             listaEscolas.innerHTML = '';
@@ -200,14 +200,14 @@
                 listaEscolas.appendChild(li);
             });
         }
-
+    
         function adicionarEscola() {
             const pesquisaEscola = document.getElementById('pesquisaEscola');
             const escolaNome = pesquisaEscola.value;
             adicionarEscolaPorNome(escolaNome);
             pesquisaEscola.value = '';
         }
-
+    
         function adicionarEscolaPorNome(escolaNome) {
             if (escolaNome) {
                 const escolaDados = dados.find(item => item.ESCOLA === escolaNome);
@@ -216,16 +216,21 @@
                     const li = document.createElement('li');
                     li.textContent = escolaNome;
                     li.setAttribute('data-escola', escolaNome);
+                    li.onclick = () => removerEscola(li);
                     escolasSelecionadas.appendChild(li);
                 }
             }
         }
-
+    
+        function removerEscola(elemento) {
+            elemento.remove();
+        }
+    
         function gerarEtiquetas() {
             const etiquetasDiv = document.getElementById('etiquetas');
             const escolasSelecionadas = document.getElementById('escolasSelecionadas').getElementsByTagName('li');
             etiquetasDiv.innerHTML = '';
-
+    
             Array.from(escolasSelecionadas).forEach(li => {
                 const escolaSelecionada = li.getAttribute('data-escola');
                 const escolaDados = dados.find(item => item.ESCOLA === escolaSelecionada);
@@ -233,32 +238,32 @@
                     const etiquetaDiv = document.createElement('div');
                     etiquetaDiv.className = 'etiqueta';
                     etiquetaDiv.style.backgroundImage = `url(${escolaDados.CART})`;
-
+    
                     const nomeEscola = document.createElement('h2');
                     nomeEscola.className = 'nomeEscola';
                     nomeEscola.textContent = escolaDados.ESCOLA;
                     nomeEscola.style.top = '0px';
                     nomeEscola.style.left = '10px';
-
+    
                     const infoEscola = document.createElement('p');
                     infoEscola.className = 'infoEscola';
                     infoEscola.innerHTML = `<strong>INEP:</strong> ${escolaDados.INEP} <strong>ID:</strong> ${escolaDados.ID} <p><strong>GERÊNCIA:</strong> ${escolaDados.GERÊNCIA} `;
                     infoEscola.style.top = '85px';
                     infoEscola.style.left = '10px';
-
+    
                     etiquetaDiv.appendChild(nomeEscola);
                     etiquetaDiv.appendChild(infoEscola);
-
+    
                     const svgFundo = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                     svgFundo.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
                     svgFundo.setAttribute('viewBox', '0 0 800 200');
                     etiquetaDiv.appendChild(svgFundo);
-
+    
                     etiquetasDiv.appendChild(etiquetaDiv);
                 }
             });
         }
-
+    
         function filtrarListaEscolas() {
             const filtro = document.getElementById('filtroEscolas').value.toLowerCase();
             const listaEscolas = document.getElementById('listaEscolas');
@@ -272,12 +277,13 @@
                 }
             });
         }
-
+    
         function alterarPosicao(nome, top, left) {
             const nomeEscola = document.querySelector(`.${nome}`);
             nomeEscola.style.top = top;
             nomeEscola.style.left = left;
         }
     </script>
+    
 </body>
 </html>
