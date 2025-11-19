@@ -159,6 +159,42 @@
 <body>
     <div class="container">
         <h1>Etiquetas de Escola</h1>
+        <h2>Adicionar Escola Manualmente</h2>
+
+<input type="text" id="manualNome" placeholder="Nome da Escola">
+<input type="text" id="manualInep" placeholder="INEP">
+<input type="text" id="manualGerencia" placeholder="Gerência">
+
+<label>Cartão:</label>
+<select id="manualCart">
+    <option value="imagens/antonioalmeida.jpg">antonioalmeida</option>
+<option value="imagens/arraial.jpg">arraial</option>
+<option value="imagens/barbalha.jpg">barbalha</option>
+<option value="imagens/batalha.jpg">batalha</option>
+<option value="imagens/divino.jpg">divino</option>
+<option value="imagens/esperantina.jpg">esperantina</option>
+<option value="imagens/francinopolis.jpg">francinopolis</option>
+<option value="imagens/itapipoca.jpg">itapipoca</option>
+<option value="imagens/lagoadobarro.jpg">lagoadobarro</option>
+<option value="imagens/mobieduca.jpg">mobieduca</option>
+<option value="imagens/mourao.jpg">mourao</option>
+<option value="imagens/novooriente.jpg">novooriente</option>
+<option value="imagens/paeslandim.jpg">paeslandim</option>
+<option value="imagens/paracuru.jpg">paracuru</option>
+<option value="imagens/pedro2.jpg">pedro2</option>
+<option value="imagens/provisoria.jpg">provisoria</option>
+<option value="imagens/quixeramobim.jpg">quixeramobim</option>
+<option value="imagens/rede.jpg">rede</option>
+<option value="imagens/redenção.jpg">redenção</option>
+<option value="imagens/seduc.jpg">seduc</option>
+<option value="imagens/semec.jpg">semec</option>
+<option value="imagens/sme.jpg">sme</option>
+<option value="imagens/uniao.jpg">uniao</option>
+</select>
+
+<button onclick="adicionarManual()">Adicionar Escola Manual</button>
+
+
         <h2>Todas as Escolas</h2>
         <input type="text" id="filtroEscolas" oninput="filtrarListaEscolas()" placeholder="Filtrar escolas">
         <div class="lista-escolas">
@@ -178,6 +214,41 @@
     <div id="etiquetas" class="etiquetas"></div>
 
     <script>
+        function adicionarManual() {
+    const nome = document.getElementById('manualNome').value.trim();
+    const inep = document.getElementById('manualInep').value.trim();
+    const gerencia = document.getElementById('manualGerencia').value.trim();
+    const cart = document.getElementById('manualCart').value;
+
+    if (!nome || !inep || !gerencia) {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    // Objeto da escola manual
+    const obj = {
+        ESCOLA: nome,
+        INEP: inep,
+        GERÊNCIA: gerencia,
+        ID: "MANUAL-" + Math.floor(Math.random() * 99999),
+        CART: cart
+    };
+
+    // Criar item na fila
+    const li = document.createElement('li');
+    li.textContent = nome + " (Manual)";
+    li.setAttribute('data-escola-manual', JSON.stringify(obj));
+    li.onclick = () => removerEscola(li);
+
+    document.getElementById('escolasSelecionadas').appendChild(li);
+
+    // limpar campos
+    document.getElementById('manualNome').value = "";
+    document.getElementById('manualInep').value = "";
+    document.getElementById('manualGerencia').value = "";
+}
+
+
         let dados;
     
         fetch('dados.json')
@@ -232,8 +303,18 @@
             etiquetasDiv.innerHTML = '';
     
             Array.from(escolasSelecionadas).forEach(li => {
-                const escolaSelecionada = li.getAttribute('data-escola');
-                const escolaDados = dados.find(item => item.ESCOLA === escolaSelecionada);
+                let escolaDados;
+
+// Se for manual
+if (li.hasAttribute('data-escola-manual')) {
+    escolaDados = JSON.parse(li.getAttribute('data-escola-manual'));
+} else {
+    // Se veio do JSON
+    const escolaSelecionada = li.getAttribute('data-escola');
+    escolaDados = dados.find(item => item.ESCOLA === escolaSelecionada);
+}
+
+
                 if (escolaDados) {
                     const etiquetaDiv = document.createElement('div');
                     etiquetaDiv.className = 'etiqueta';
