@@ -163,7 +163,9 @@
 
 <input type="text" id="manualNome" placeholder="Nome da Escola">
 <input type="text" id="manualInep" placeholder="INEP">
+<input type="text" id="manualIdentificacao" placeholder="Identificação">
 <input type="text" id="manualGerencia" placeholder="Gerência">
+
 
 <label>Cartão:</label>
 <select id="manualCart">
@@ -217,10 +219,11 @@
         function adicionarManual() {
     const nome = document.getElementById('manualNome').value.trim();
     const inep = document.getElementById('manualInep').value.trim();
+    const identificacao = document.getElementById('manualIdentificacao').value.trim();
     const gerencia = document.getElementById('manualGerencia').value.trim();
     const cart = document.getElementById('manualCart').value;
 
-    if (!nome || !inep || !gerencia) {
+    if (!nome || !inep || !identificacao || !gerencia) {
         alert("Preencha todos os campos!");
         return;
     }
@@ -229,8 +232,8 @@
     const obj = {
         ESCOLA: nome,
         INEP: inep,
+        ID: identificacao,
         GERÊNCIA: gerencia,
-        ID: "MANUAL-" + Math.floor(Math.random() * 99999),
         CART: cart
     };
 
@@ -245,7 +248,9 @@
     // limpar campos
     document.getElementById('manualNome').value = "";
     document.getElementById('manualInep').value = "";
+    document.getElementById('manualIdentificacao').value = "";
     document.getElementById('manualGerencia').value = "";
+    
 }
 
 
